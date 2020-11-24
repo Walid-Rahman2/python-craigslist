@@ -271,9 +271,13 @@ class CraigslistBase(object):
         self.logger.debug('Geotagging result ...')
 
         map_ = soup.find('div', {'id': 'map'})
-        if map_:
-            result['geotag'] = (float(map_.attrs['data-latitude']),
-                                float(map_.attrs['data-longitude']))
+        try:
+            if map_:
+                result['geotag'] = (float(map_.attrs['data-latitude']),
+                                    float(map_.attrs['data-longitude']))
+        except:
+            result['geotag'] = None
+        
 
         return result
 
